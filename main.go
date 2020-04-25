@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/olivere/elastic"
+	elastic "github.com/olivere/elastic/v7"
 	"github.com/pborman/uuid"
 )
 
@@ -25,8 +25,8 @@ const (
 	//PROJECT_ID = "around-xxx"
 	//BT_INSTANCE = "around-post"
 	// Needs to update this URL if you deploy it to cloud.
-	// ES_URL : elasticseach url
-	ES_URL = "http://34.69.173.139:9200"
+	// ESURL : elasticseach url
+	ESURL = "http://35.223.59.191:9200"
 )
 
 // Location is location json struct
@@ -46,7 +46,7 @@ type Post struct {
 // Save a post to ElasticSearch
 func saveToES(p *Post, id string) {
 	// Create a client
-	esClient, err := elastic.NewClient(elastic.SetURL(ES_URL), elastic.SetSniff(false))
+	esClient, err := elastic.NewClient(elastic.SetURL(ESURL), elastic.SetSniff(false))
 	if err != nil {
 		panic(err)
 	}
@@ -92,7 +92,7 @@ func handlerSearch(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Search received: %f %f %s\n", lat, lon, ran)
 
 	// Create a client
-	client, err := elastic.NewClient(elastic.SetURL(ES_URL), elastic.SetSniff(false))
+	client, err := elastic.NewClient(elastic.SetURL(ESURL), elastic.SetSniff(false))
 	if err != nil {
 		panic(err)
 	}
@@ -143,7 +143,7 @@ func handlerSearch(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// Create a client
-	client, err := elastic.NewClient(elastic.SetURL(ES_URL), elastic.SetSniff(false))
+	client, err := elastic.NewClient(elastic.SetURL(ESURL), elastic.SetSniff(false))
 	if err != nil {
 		panic(err)
 	}
